@@ -490,10 +490,14 @@ class Factory implements IFactory {
 				[$preferred_language] = explode(';', $preference);
 				$preferred_language = str_replace('-', '_', $preferred_language);
 
+				$preferred_language_parts = explode('_', $preferred_language);
 				foreach ($available as $available_language) {
-					if ($preferred_language === strtolower($available_language)) {
-						return $this->respectDefaultLanguage($app, $available_language);
-					}
+						if ($preferred_language === strtolower($available_language)) {
+								return $this->respectDefaultLanguage($app, $available_language);
+						}
+						if ($preferred_language_parts[0].'_'.$preferred_language_parts[count($preferred_language_parts) - 1] === strtolower($available_language)) {
+								return $available_language;
+						}
 				}
 
 				// Fallback from de_De to de
